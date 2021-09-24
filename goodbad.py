@@ -5,7 +5,7 @@ class Solution:
         :type v: int
         :rtype: bool
         """
-        if(v<=4):
+        if(v<=83):
             return False
         else:
             return True
@@ -22,20 +22,25 @@ class Solution:
         while(low != high & high > low):
             guess = nums[(high+low)//2] ## start in the middle
                 
-            if(isBadVersion(guess) == True): ## see if it's okay
+            if(self.isBadVersion(guess) == True): ## see if it's okay
                 ## this means this one is bad, so the good is in the lower half of the array
-                high = guess - 1
+                ## Check left, and see if it is bad, if it is, we've found it
+                if(self.isBadVersion(guess-1) == False):
+                    return guess-1
+                else:
+                    high = guess - 1
             else:
                 ## this means it returned a good version, the bad is in the upper array
                 low = guess + 1
-        if(isBadVersion(guess) == True):
+        if(self.isBadVersion(guess) == True):
             return guess
         else:
             return -1
 
 def main():
     solution = Solution()
-    print(solution.isBadVersion(10))
+    ans = solution.firstBadVersion(100)
+    print(ans)
 
 if __name__ == "__main__":
     main()
